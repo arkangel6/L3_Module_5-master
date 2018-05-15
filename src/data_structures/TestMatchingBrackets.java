@@ -19,6 +19,7 @@ public class TestMatchingBrackets {
 		assertFalse(doBracketsMatch("}{"));
 		
 		assertFalse(doBracketsMatch("{}{}}{"));
+		assertFalse(doBracketsMatch("{}{}}{}}{{}}"));
 	}
 
 	// USE A STACK TO COMPLETE THE METHOD FOR CHECKING IF EVERY OPENING BRACKET HAS A MATCHING CLOSING BRACKET
@@ -53,13 +54,22 @@ public class TestMatchingBrackets {
 		if(brackets.length % 2 == 1) {
 			return false;
 		}
-	
+		
+		boolean sort = true;
+		while(sort) {
+			sort = false;
+		
 		for(int i = 0; i < s.size(); i++) {
 			
-			for(int j = i; j < s.size()-1; j++) {
+			for(int j = i; j < s.size(); j++) {
+				//System.out.println(i + " " + s.get(i) + " " + j + " " + s.get(j));
 				if(s.get(i) == '{' && s.get(j) == '}') {
-					s.remove(i);
-					s.remove(j);
+					//s.remove(i);
+					//s.remove(j);
+					s.set(i, 'k');
+					s.set(j, 'k');
+					sort = true;
+					//System.out.println(Arrays.toString(s.toArray()));
 				}
 				
 				
@@ -67,10 +77,24 @@ public class TestMatchingBrackets {
 			}
 			
 		}
+		}
+		//System.out.println(Arrays.toString(s.toArray()));
+		//System.out.println(" ");
 		
-		System.out.println(Arrays.toString(s.toArray()));
+		int counter = 0;
+		for(char kk : s) {
+			if(kk == 'k') {
+				counter++;
+			}
+		}
 		
+		if(counter == s.size()) {
 		return true;
+		}
+		return false;
+		
+		
+		
 		//return false;
 	}
 
